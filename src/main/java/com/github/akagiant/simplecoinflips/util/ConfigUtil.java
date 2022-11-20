@@ -11,6 +11,8 @@ import java.util.List;
 
 public class ConfigUtil {
 
+	// TODO: Port to GiantAPI
+
 	public static String string = "String ('your text here')";
 	public static String[] strings = new String[]{"'line 1'", "'line 2'", "'line 3'"};
 	public static String wholeNumber = "Whole Number E.G. 1, 2, 3";

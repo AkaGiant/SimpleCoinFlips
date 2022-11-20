@@ -1,0 +1,11 @@
+coinflips:
+  # This is where you change the side names,
+  # Examples being, Red/Blue, Heads/Tails, Up/Down etc...
+
+  options:
+    sides:
+      1: HEADS
+      2: TAILS
+    tax:
+      enabled: false
+      amount: 5 # IN PERCENTAGE

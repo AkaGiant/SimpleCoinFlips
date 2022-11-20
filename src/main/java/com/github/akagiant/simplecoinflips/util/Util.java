@@ -5,7 +5,6 @@ import com.github.akagiant.simplecoinflips.dependencies.PlaceholderManager;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.RegisteredCommand;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -77,7 +76,7 @@ public class Util {
 			if (getServer().getPluginManager().getPlugin("Vault") == null) { return; }
 			RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
 			if (rsp == null) { return; }
-			SimpleCoinFlips.setEconomy(rsp.getProvider());
+			SimpleCoinFlips.economy = rsp.getProvider();
 		}
 
 		if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {

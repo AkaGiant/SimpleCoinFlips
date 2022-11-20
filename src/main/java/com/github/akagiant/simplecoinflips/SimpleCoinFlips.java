@@ -1,5 +1,6 @@
 package com.github.akagiant.simplecoinflips;
 
+import com.github.akagiant.simplecoinflips.commands.CommandCoinFlip;
 import com.github.akagiant.simplecoinflips.util.Logger;
 import com.github.akagiant.simplecoinflips.util.Util;
 import dev.jorel.commandapi.CommandAPI;
@@ -13,13 +14,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SimpleCoinFlips extends JavaPlugin {
 
+	// TODO: Check that Vault is installed AND an economy handler is present.
+	// TODO: Taxed based on permissions but has a global override.
+
 	@Getter
 	private static Plugin plugin;
 	public static Config config;
 	public static boolean hasPAPI = false;
 
-	@Setter
-	private static Economy economy = null;
+	@Getter
+	public static Economy economy = null;
 
 	@Override
 	public void onLoad() {
@@ -68,6 +72,7 @@ public final class SimpleCoinFlips extends JavaPlugin {
 	}
 
 	private void registerCommands() {
+		CommandCoinFlip.register();
 	}
 
 	private void registerEvents() {
