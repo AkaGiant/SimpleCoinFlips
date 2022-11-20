@@ -8,7 +8,7 @@ public class PlaceholderManager extends PlaceholderExpansion {
 
 	@Override
 	public @NotNull String getIdentifier() {
-		return "HorusEconomy";
+		return "SimpleCoinFlips";
 	}
 
 	@Override
