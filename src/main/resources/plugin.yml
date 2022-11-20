@@ -1,0 +1,8 @@
+name: SimpleCoinFlips
+version: '${project.version}'
+main: com.github.akagiant.simplecoinflips.SimpleCoinFlips
+api-version: 1.19
+depend: [ Vault ]
+softdepend: [ PlaceholderAPI ]
+authors: [ AkaGiant ]
+website: https://github.com/akagiant
