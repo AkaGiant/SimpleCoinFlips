@@ -1,0 +1,14 @@
+# Todo: All Message should support internal placeholders and PAPI Placeholders
+
+
+# Argument Explanation: ${A1}, ${A2}, ${A3}, etc...
+# Example Command: /give AkaGiant cooked_beef 64
+# ${A1} is the First Argument of a Command | AkaGiant
+# ${A2} is cooked_beef
+# ${A3} is 64
+# etc...
+
+
+cannot-afford: "&6SimpleCoinFlips &8| &fYou cannot afford to create this coinflips: ${A1}/[player balance]"
+max-coinflips: "&6SimpleCoinFlips &8| &fYou are not able to create any more coinflips: [current coinflips]/[max coinflips]"
+notifications-toggled: "&6SimpleCoinFlips &8| &FCoinFlip Notifications Toggled: [coinflip notification status]"

@@ -6,3 +6,22 @@ depend: [ Vault ]
 softdepend: [ PlaceholderAPI ]
 authors: [ AkaGiant ]
 website: https://github.com/akagiant
+
+permissions:
+  simplecoinflips.*:
+    default: op
+    description: Gives the user access to all CoinFlip Permissions
+    children:
+      simplecoinflips.create: true
+  simplecoinflips.create:
+    description: Allows the user to create coinflips
+  simplecoinflips.toggle:
+    description: Allows the user to toggle notifications from newly created coinflips
+  simplecoinflips.cancel:
+    description: Allows the user to cancel one or all of their coinflips.
+  simplecoinflips.stats:
+    description: Allows the user to view their own coinflip stats
+  simplecoinflips.stats.other:
+    description: Allows the user to view another players coinflip stats
+    children:
+      simplecoinflips.stats: true
