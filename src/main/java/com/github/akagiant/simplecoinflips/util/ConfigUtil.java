@@ -101,7 +101,6 @@ public class ConfigUtil {
 		Logger.severe("&m————————————————————————————————————");
 	}
 
-
 	private static void printPath(String path, String... expected) {
 		String[] splitPath = path.split("\\.");
 		for (int i = 0; i < splitPath.length; i++) {
@@ -120,5 +119,4 @@ public class ConfigUtil {
 			}
 		}
 	}
-
 }

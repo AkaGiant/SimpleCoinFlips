@@ -1,12 +1,11 @@
 package com.github.akagiant.simplecoinflips;
 
-import com.github.akagiant.simplecoinflips.commands.CommandCoinFlip;
+import com.github.akagiant.simplecoinflips.basic.commands.CommandCoinFlip;
 import com.github.akagiant.simplecoinflips.util.Logger;
 import com.github.akagiant.simplecoinflips.util.Util;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIConfig;
 import lombok.Getter;
-import lombok.Setter;
 import me.akagiant.giantapi.util.Config;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.Plugin;
@@ -19,9 +18,8 @@ public final class SimpleCoinFlips extends JavaPlugin {
 
 	@Getter
 	private static Plugin plugin;
-	public static Config config;
+	public static Config config, messages, playerData, cfData;
 	public static boolean hasPAPI = false;
-
 	@Getter
 	public static Economy economy = null;
 
@@ -43,7 +41,6 @@ public final class SimpleCoinFlips extends JavaPlugin {
 
 		registerConfigurations();
 		registerCommands();
-		registerEvents();
 
 		Logger.toConsole("&fCommands Loaded (&a" + (CommandAPI.getRegisteredCommands().size())+ "&f) &8| &fAliases: (&a" + Util.getCommandAliasesCount() + "&f)");
 		Logger.toConsole("&fPermissions Loaded (&a" + (Util.getPermissionsCount())+ "&f)");
@@ -58,6 +55,7 @@ public final class SimpleCoinFlips extends JavaPlugin {
 		Logger.toConsole("&fDeveloped by &aAkaGiant");
 		Logger.toConsole("&fVersion: &a" + getPlugin().getDescription().getVersion());
 		Logger.toConsole("&m————————————————————————————————————");
+
 	}
 
 
@@ -69,14 +67,12 @@ public final class SimpleCoinFlips extends JavaPlugin {
 
 	private void registerConfigurations() {
 		config = new Config(this, "config");
+		playerData = new Config(this, "playerdata");
+		cfData = new Config(this, "cfdata");
+		messages = new Config(this, "message");
 	}
 
 	private void registerCommands() {
 		CommandCoinFlip.register();
 	}
-
-	private void registerEvents() {
-	}
-
-
 }

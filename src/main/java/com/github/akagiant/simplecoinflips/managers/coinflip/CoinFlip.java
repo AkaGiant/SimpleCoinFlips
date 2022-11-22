@@ -1,9 +1,6 @@
-package com.github.akagiant.simplecoinflips.managers;
+package com.github.akagiant.simplecoinflips.managers.coinflip;
 
-import com.github.akagiant.simplecoinflips.SimpleCoinFlips;
-import com.github.akagiant.simplecoinflips.util.ConfigUtil;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,18 +29,25 @@ public class CoinFlip {
 	@Getter
 	private final String creatorsCoinFlipSide;
 
+	// TODO: Make Persistent.
 	@Getter
 	public static List<CoinFlip> coinFlipList = new ArrayList<>();
 
+
 	public CoinFlip(UUID creator, double worth, String creatorsCoinFlipSide) {
 		this.creator = creator;
-		this.worth = worth;
+
 		this.creatorsCoinFlipSide = creatorsCoinFlipSide;
 
 		coinFlipTax = new CoinFlipTax(worth);
+		if (CoinFlipTax.taxIsEnabled()) {
+			this.worth = coinFlipTax.getCfWorthAfterTax();
+		} else {
+			this.worth = worth;
+		}
+
 
 		coinFlipList.add(this);
-
 		// Todo: Inform creator that it has been created
 		// Todo: Inform server that it has been created.
 	}

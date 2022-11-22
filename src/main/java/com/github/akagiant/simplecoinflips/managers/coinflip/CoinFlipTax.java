@@ -1,4 +1,4 @@
-package com.github.akagiant.simplecoinflips.managers;
+package com.github.akagiant.simplecoinflips.managers.coinflip;
 
 import com.github.akagiant.simplecoinflips.SimpleCoinFlips;
 import com.github.akagiant.simplecoinflips.util.ConfigUtil;
