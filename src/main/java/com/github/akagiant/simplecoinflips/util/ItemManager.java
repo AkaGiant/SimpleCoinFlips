@@ -7,6 +7,7 @@ import me.akagiant.giantapi.util.ColorManager;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,6 +50,17 @@ public class ItemManager {
 		head.setItemMeta(meta);
 
 		return head;
+	}
+
+	// Todo, make compatible with old skulls.
+	public static ItemStack createPlayerHead(@NotNull String playerName, @Nullable String overrideDisplayName, @Nullable String... lore) {
+		ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+		SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
+		meta.setDisplayName(ColorManager.formatColours(playerName));
+		meta.setLore(Arrays.stream(lore).filter(Objects::nonNull).map(ColorManager::formatColours).collect(Collectors.toList()));
+		meta.setOwner(playerName);
+		itemStack.setItemMeta(meta);
+		return itemStack;
 	}
 
 
