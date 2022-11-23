@@ -4,13 +4,16 @@ import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import de.tr7zw.changeme.nbtapi.NBTListCompound;
 import me.akagiant.giantapi.util.ColorManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.nio.Buffer;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
@@ -56,9 +59,27 @@ public class ItemManager {
 	public static ItemStack createPlayerHead(@NotNull String playerName, @Nullable String overrideDisplayName, @Nullable String... lore) {
 		ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
 		SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
-		meta.setDisplayName(ColorManager.formatColours(playerName));
+
+		if (overrideDisplayName != null) { meta.setDisplayName(ColorManager.formatColours(overrideDisplayName)); }
+		else { meta.setDisplayName(ColorManager.formatColours(playerName)); }
+
 		meta.setLore(Arrays.stream(lore).filter(Objects::nonNull).map(ColorManager::formatColours).collect(Collectors.toList()));
 		meta.setOwner(playerName);
+		itemStack.setItemMeta(meta);
+		return itemStack;
+	}
+
+	public static ItemStack createPlayerHead(@NotNull UUID playerId, @Nullable String overrideDisplayName, @Nullable String... lore) {
+		ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+		SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
+
+		OfflinePlayer player = Bukkit.getOfflinePlayer(playerId);
+
+		if (overrideDisplayName != null) { meta.setDisplayName(ColorManager.formatColours(overrideDisplayName)); }
+		else { meta.setDisplayName(ColorManager.formatColours(player.getName())); }
+
+		meta.setLore(Arrays.stream(lore).filter(Objects::nonNull).map(ColorManager::formatColours).collect(Collectors.toList()));
+		meta.setOwner(player.getName());
 		itemStack.setItemMeta(meta);
 		return itemStack;
 	}
