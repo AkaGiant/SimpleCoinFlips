@@ -1,6 +1,7 @@
 package com.github.akagiant.simplecoinflips;
 
 import com.github.akagiant.simplecoinflips.basic.commands.CommandCoinFlip;
+import com.github.akagiant.simplecoinflips.basic.commands.CommandSimpleCoinFlips;
 import com.github.akagiant.simplecoinflips.util.Logger;
 import com.github.akagiant.simplecoinflips.util.Util;
 import dev.jorel.commandapi.CommandAPI;
@@ -13,7 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SimpleCoinFlips extends JavaPlugin {
 
-	// TODO: Check that Vault is installed AND an economy handler is present.
 	// TODO: Taxed based on permissions but has a global override.
 
 	@Getter
@@ -47,7 +47,6 @@ public final class SimpleCoinFlips extends JavaPlugin {
 
 		Util.findDepends(plugin);
 		Util.findSoftDepends(plugin);
-		Util.registerDependencies(plugin);
 
 		Logger.toConsole("&m————————————————————————————————————");
 		Logger.toConsole("&ahas been Enabled");
@@ -55,9 +54,7 @@ public final class SimpleCoinFlips extends JavaPlugin {
 		Logger.toConsole("&fDeveloped by &aAkaGiant");
 		Logger.toConsole("&fVersion: &a" + getPlugin().getDescription().getVersion());
 		Logger.toConsole("&m————————————————————————————————————");
-
 	}
-
 
 	@Override
 	public void onDisable() {
@@ -69,10 +66,11 @@ public final class SimpleCoinFlips extends JavaPlugin {
 		config = new Config(this, "config");
 		playerData = new Config(this, "playerdata");
 		cfData = new Config(this, "cfdata");
-		messages = new Config(this, "message");
+		messages = new Config(this, "messages");
 	}
 
 	private void registerCommands() {
 		CommandCoinFlip.register();
+		CommandSimpleCoinFlips.register();
 	}
 }

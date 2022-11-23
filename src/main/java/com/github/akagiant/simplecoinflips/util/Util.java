@@ -49,6 +49,16 @@ public class Util {
 
 		if (!found.isEmpty()) Logger.toConsole("&fFound &8| &a" + String.join("&8, &a", found));
 		if (!missing.isEmpty()) Logger.toConsole("&fMissing &8| &c" + String.join("&8, &c", missing));
+
+		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+		if (rsp == null) {
+			Logger.severe(SimpleCoinFlips.getPlugin().getDescription().getName() + " Disabled Version " + SimpleCoinFlips.getPlugin().getDescription().getVersion() + " | Vault Hook Not Found");
+			getServer().getPluginManager().disablePlugin(plugin);
+			return;
+		}
+		SimpleCoinFlips.economy = rsp.getProvider();
+		Logger.toConsole("Vault Hooked to &b" + rsp.getProvider().getName());
+
 	}
 
 	public static void findSoftDepends(Plugin plugin) {
@@ -65,24 +75,17 @@ public class Util {
 
 		if (!found.isEmpty()) Logger.toConsole("&fFound &8| &a" + String.join("&8, &a", found));
 		if (!missing.isEmpty()) Logger.toConsole("&fMissing &8| &c" + String.join("&8, &c", missing));
-	}
-
-	public static void registerDependencies(Plugin plugin) {
 
 		if (getServer().getPluginManager().getPlugin("Vault") == null) {
-			Logger.severe("Vault Not Found");
+			Logger.severe(SimpleCoinFlips.getPlugin().getDescription().getName() + " Disabled Version " + SimpleCoinFlips.getPlugin().getDescription().getVersion() + " | Vault Not Found");
 			getServer().getPluginManager().disablePlugin(plugin);
-		} else {
-			if (getServer().getPluginManager().getPlugin("Vault") == null) { return; }
-			RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-			if (rsp == null) { return; }
-			SimpleCoinFlips.economy = rsp.getProvider();
 		}
 
 		if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			new PlaceholderManager().register();
 			SimpleCoinFlips.hasPAPI = true;
 		}
+
 	}
 	
 }
