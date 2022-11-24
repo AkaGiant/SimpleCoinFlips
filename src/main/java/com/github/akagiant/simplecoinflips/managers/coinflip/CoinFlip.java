@@ -3,26 +3,32 @@ package com.github.akagiant.simplecoinflips.managers.coinflip;
 import com.github.akagiant.simplecoinflips.SimpleCoinFlips;
 import com.github.akagiant.simplecoinflips.util.ConfigUtil;
 import com.github.akagiant.simplecoinflips.util.ItemManager;
+import com.github.akagiant.simplecoinflips.util.Logger;
+import jdk.vm.ci.code.site.Call;
 import lombok.Getter;
+import me.akagiant.giantapi.util.ColorManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 import org.junit.runners.Suite;
 
 import javax.xml.crypto.dsig.SignedInfo;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.Callable;
 
 public class CoinFlip {
 
 	@Getter
 	private UUID cfId;
 
-	public CoinFlip(UUID creatorId, double worth, String creatorsCoinFlipSide) {
+	public CoinFlip(Player creator, double worth, String creatorsCoinFlipSide) {
 
 		this.cfId = UUID.randomUUID();
 
@@ -32,8 +38,8 @@ public class CoinFlip {
 			SimpleCoinFlips.cfData.getConfig().createSection(getCfId().toString());
 
 			// Save Creator ID
-			SimpleCoinFlips.cfData.getConfig().set(getCfId() + ".creator", creatorId.toString());
-
+			SimpleCoinFlips.cfData.getConfig().set(getCfId() + ".creator.id", creator.getUniqueId().toString());
+			SimpleCoinFlips.cfData.getConfig().set(getCfId() + ".creator.name", creator.getName());
 			// Save worth before tax
 			SimpleCoinFlips.cfData.getConfig().set(getCfId() + ".worth", worth);
 
@@ -89,47 +95,33 @@ public class CoinFlip {
 		return getWorthBeforeTax();
 	}
 
+	/** @return Weather or not tax is enabled for this CoinFlip */
 	public boolean taxIsEnabled() {
 		return ConfigUtil.getBoolean(SimpleCoinFlips.cfData, getCfId() + ".tax.enabled");
 	}
 
+	/** @return The percentage of tax to apply to the CoinFlip */
 	public double getTaxPercentage() {
 		return ConfigUtil.getDouble(SimpleCoinFlips.cfData, getCfId() + ".tax.percentage");
 	}
 
+	/** @return The creators UUID */
 	public UUID getCreatorId() {
-		return UUID.fromString(ConfigUtil.getString(SimpleCoinFlips.cfData, getCfId() + ".creator"));
+		return UUID.fromString(ConfigUtil.getString(SimpleCoinFlips.cfData, getCfId() + ".creator.id"));
 	}
 
-	public double getToServer() {
-		double worth = getWorthBeforeTax();
-		double after = getWorthAfterTax();
-		return worth - after;
+	/** @return The creators name */
+	public String getCreatorName() {
+		return ConfigUtil.getString(SimpleCoinFlips.cfData, getCfId() + "creator.name");
 	}
 
-	public ItemStack getItemStack() {
-
-		// TODO: Change to creators player head
-		ItemStack itemStack = new ItemStack(ItemManager.createPlayerHead(getCreatorId(), null));
-		ItemMeta meta = itemStack.getItemMeta();
-		List<String> lore = new ArrayList<>();
-
-		lore.add("&m--------------");
-		lore.add("Creator" + getCreatorId().toString());
-		lore.add("Worth" + getWorthBeforeTax());
-		if (taxIsEnabled()) {
-			lore.add("Tax:");
-			lore.add("  Enabled:" + taxIsEnabled());
-			lore.add("  Percentage: " + getTaxPercentage());
-			lore.add("  To Server: " + getToServer());
-		} else {
-			lore.add("Tax: Disabled");
-		}
-
-		meta.setLore(lore);
-		itemStack.setItemMeta(meta);
-		return itemStack;
+	/** @return The Side of the CoinFlip the Creator Chose */
+	public String getCreatorSide() {
+		return ConfigUtil.getString(SimpleCoinFlips.cfData, getCfId() + ".side");
 	}
+
+	/** @return The amount of money that is taken from the CF and goes to the server */
+	public double getToServer() { return getWorthBeforeTax() - getWorthAfterTax() ; }
 
 
 }
