@@ -4,45 +4,39 @@ import com.github.akagiant.simplecoinflips.SimpleCoinFlips;
 import com.github.akagiant.simplecoinflips.managers.PermissionManager;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class InternalPlaceholderManager {
 
+	private InternalPlaceholderManager() {
+		//no instance
+	}
+	
 	// Should handle all internal placeholders.
 	public static String format(Player player, String str) {
 
 		String formattedString = str;
 
-		if (formattedString.contains("[current coinflips]") || formattedString.contains("created coinflips")) {
-			String amount = String.valueOf(PermissionManager.getCurrentlyCreated(player));
+		Map<String, Object> replaceableValues = new HashMap<>();
+		int created = PermissionManager.getCurrentlyCreated(player);
+		int max = PermissionManager.getMaxCfs(player);
+		boolean canCreate = PermissionManager.canCreateNewCf(player);
+		double bal = SimpleCoinFlips.getEconomy().getBalance(player);
 
-			formattedString = formattedString.replace("[created coinflips", amount);
-			formattedString = formattedString.replace("[current coinflips", amount);
-		}
+		replaceableValues.put("[created coinflips]",  created);
+		replaceableValues.put("[current coinflips]", created);
+		replaceableValues.put("[max coinflips]", max == -1 ? "Unlimited" : max);
+		replaceableValues.put("[can create a coinflip]", canCreate);
+		replaceableValues.put("[can create coinflip]", canCreate);
+		replaceableValues.put("[player bal]", bal);
+		replaceableValues.put("[player balance]", bal);
+		replaceableValues.put("[players balance]", bal);
 
-		if (formattedString.contains("[max coinflips")) {
-			String max = String.valueOf(PermissionManager.getMaxCfs(player));
-			if (max.equals("-1")) {
-				formattedString = formattedString.replace("[max coinflips]", "Unlimited");
-			} else {
-				formattedString = formattedString.replace("[max coinflips]", max);
-			}
-		}
-
-		if (formattedString.contains("[can a create coinflip]") || formattedString.contains("can create coinflip")) {
-			String canCreate = String.valueOf(PermissionManager.canCreateNewCf(player));
-
-			formattedString = formattedString.replace("[can create a coinflip]", canCreate);
-			formattedString = formattedString.replace("[can create coinflip]", canCreate);
-		}
-
-		if (formattedString.contains("[player balance]") || formattedString.contains("player bal")) {
-
-			String bal = String.valueOf(SimpleCoinFlips.getEconomy().getBalance(player));
-
-			formattedString = formattedString.replace("[player bal]", bal);
-			formattedString = formattedString.replace("[player balance]", bal);
+		for (Map.Entry<String, Object> entry : replaceableValues.entrySet()) {
+			formattedString = formattedString.replace(entry.getKey(), String.valueOf(entry.getValue()));
 		}
 
 		return formattedString;
 	}
-
 }
