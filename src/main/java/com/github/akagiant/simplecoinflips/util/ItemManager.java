@@ -13,7 +13,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.nio.Buffer;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.UUID;
@@ -79,6 +78,18 @@ public class ItemManager {
 		else { meta.setDisplayName(ColorManager.formatColours(player.getName())); }
 
 		meta.setLore(Arrays.stream(lore).filter(Objects::nonNull).map(ColorManager::formatColours).collect(Collectors.toList()));
+		meta.setOwner(player.getName());
+		itemStack.setItemMeta(meta);
+		return itemStack;
+	}
+
+	public static ItemStack createPlayerHead(@NotNull UUID playerId) {
+		ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
+		SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
+
+		OfflinePlayer player = Bukkit.getOfflinePlayer(playerId);
+
+		meta.setDisplayName(ColorManager.formatColours(player.getName()));
 		meta.setOwner(player.getName());
 		itemStack.setItemMeta(meta);
 		return itemStack;
