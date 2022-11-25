@@ -85,9 +85,9 @@ public class CoinFlipItem {
 
 		for (String str : lore) {
 			for (Map.Entry<String, Object> entry : replaceables.entrySet()) {
-				formattedLore.add(
-					str.replace(entry.getKey(), String.valueOf(entry.getValue())));
+				str = str.replace(entry.getKey(), String.valueOf(entry.getValue()));
 			}
+			formattedLore.add(str);
 		}
 		return ColorManager.formatColours(formattedLore);
 	}
@@ -107,7 +107,7 @@ public class CoinFlipItem {
 		replaceableValues.put("[tax percentage]", coinFlip.getTaxPercentage());
 		replaceableValues.put("[tax amount]", coinFlip.getToServer());
 
-		replaceableValues.put("[totals cfs played]", user.getTotalGames());
+		replaceableValues.put("[total cfs played]", user.getTotalGames());
 		replaceableValues.put("[cfs won]", user.getWins());
 		replaceableValues.put("[cfs lost]", user.getLosses());
 		replaceableValues.put("[cf ratio]", user.getWinLossRatio());
