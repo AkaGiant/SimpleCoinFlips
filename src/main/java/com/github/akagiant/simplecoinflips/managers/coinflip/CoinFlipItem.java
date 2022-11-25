@@ -6,10 +6,12 @@ import com.github.akagiant.simplecoinflips.util.ItemManager;
 import lombok.Getter;
 import me.akagiant.giantapi.util.ColorManager;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -45,6 +47,8 @@ public class CoinFlipItem {
 			meta.addEnchant(Enchantment.DURABILITY, 1, true);
 			meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		}
+
+		meta.getPersistentDataContainer().set(new NamespacedKey(SimpleCoinFlips.getPlugin(), "cf_id"), PersistentDataType.STRING, getCoinFlip().getCfId().toString());
 
 		itemStack.setItemMeta(meta);
 		return itemStack;

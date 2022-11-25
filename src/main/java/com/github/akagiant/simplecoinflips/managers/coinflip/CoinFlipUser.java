@@ -53,8 +53,18 @@ public class CoinFlipUser {
 	/** @return How many times this player has won CoinFlips */
 	public int getWins() { return ConfigUtil.getInt(SimpleCoinFlips.playerData, getUuid() + ".total-wins"); }
 
+	public void addWin() {
+		SimpleCoinFlips.playerData.getConfig().set(getUuid() + ".total-wins", getWins() + 1);
+		SimpleCoinFlips.playerData.saveConfig();
+	}
+
 	public void setLosses(int amount) {
 		SimpleCoinFlips.playerData.getConfig().set(getUuid() + ".total-losses", amount);
+		SimpleCoinFlips.playerData.saveConfig();
+	}
+
+	public void addLoss() {
+		SimpleCoinFlips.playerData.getConfig().set(getUuid() + ".total-losses", getLosses() + 1);
 		SimpleCoinFlips.playerData.saveConfig();
 	}
 
@@ -86,6 +96,7 @@ public class CoinFlipUser {
 
 	public boolean getHasNotificationsToggled() { return ConfigUtil.getBoolean(SimpleCoinFlips.playerData, getUuid() + ".has-notifications-toggled"); }
 
+
 	public void updateWinnings(double amount) {
 		SimpleCoinFlips.playerData.getConfig().set(getUuid() + ".total-winnings", getWinnings() + amount);
 		SimpleCoinFlips.playerData.saveConfig();
@@ -97,8 +108,7 @@ public class CoinFlipUser {
 	}
 
 	/** @return The total winnings the player has earned from CoinFlips, this value can be negative if they have lost more than they have won. */
-	public double getWinnings() { return ConfigUtil.getInt(SimpleCoinFlips.playerData, getUuid() + ".total-losses"); }
-
+	public double getWinnings() { return ConfigUtil.getInt(SimpleCoinFlips.playerData, getUuid() + ".total-winnings"); }
 
 	public void setTotalTaxed(double amount) {
 		SimpleCoinFlips.playerData.getConfig().set(getUuid() + ".total-taxed", amount);
@@ -106,7 +116,7 @@ public class CoinFlipUser {
 	}
 
 	public void updateTotalTaxed(double amount) {
-		SimpleCoinFlips.playerData.getConfig().set(getUuid() + ".total-winnings", getTotalTaxed() + amount);
+		SimpleCoinFlips.playerData.getConfig().set(getUuid() + ".total-taxed", getTotalTaxed() + amount);
 		SimpleCoinFlips.playerData.saveConfig();
 	}
 

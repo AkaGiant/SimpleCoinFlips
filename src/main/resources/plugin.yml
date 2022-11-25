@@ -25,3 +25,9 @@ permissions:
     description: Allows the user to view another players coinflip stats
     children:
       simplecoinflips.stats: true
+
+# /settax <amount>
+# /settax <enabled/disabled>
+# /cfupdate set tax enabled
+# /cfupdate set tax <cf id> <amount>
+# /cfupdate set tax <cf id> <enabled/disabled>

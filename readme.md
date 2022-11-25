@@ -1,3 +1,4 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/akagiant/simplecoinflips/badge/dev)](https://www.codefactor.io/repository/github/akagiant/simplecoinflips/overview/dev)
 ## Permissions:
 ### Base: SimpleCoinFlips
 |   Permission   |                                                                     Description                                                                      | Default | Children |

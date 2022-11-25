@@ -9,3 +9,35 @@ coinflips:
     tax:
       enabled: false
       amount: 5 # IN PERCENTAGE
+    menu:
+      # I'm really not sure how to make
+      # this section the most customisable...
+      # So, if a CF is created and tax IS ENABLED
+      # has-tax will display, if take is DISABLED
+      # does-not-have-tax will be displayed.
+      has-tax:
+        material: CREATORS_PLAYER_HEAD
+        display-name: "&b[creators player name]"
+        lore:
+          - "&m--------------"
+          - "Creator: [cf creator name]"
+          - "Worth: [cf worth]"
+          - "Side: [cf side]"
+          - "Tax:"
+          - "-[tax percentage]% ($[tax amount])"
+          - "Win Loss"
+          - "[total cfs played] ([cfs won]:[cfs lost])"
+          - "Click to accept"
+        has-enchantment-glow: true
+      does-not-have-tax:
+        material: CREATORS_PLAYER_HEAD
+        display-name: "&b[creators player name]"
+        lore:
+          - "&m--------------"
+          - "Creator: [cf creator name]"
+          - "Worth: [cf worth]"
+          - "Side: [cf side]"
+          - "Win Loss"
+          - "[total cfs played] ([cfs won]:[cfs lost])"
+          - "Click to accept"
+        has-enchantment-glow: false
