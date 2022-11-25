@@ -56,6 +56,8 @@ public class CoinFlip {
 				// Save how much tax should be applied for the CF.
 				double percentage = ConfigUtil.getDouble(SimpleCoinFlips.config, "coinflips.options.tax.amount");
 				SimpleCoinFlips.cfData.getConfig().set(getCfId() + ".tax.percentage", percentage);
+			} else {
+				SimpleCoinFlips.cfData.getConfig().set(getCfId() + ".tax.percentage", 0);
 			}
 
 			// Save the file.
@@ -112,7 +114,7 @@ public class CoinFlip {
 
 	/** @return The creators name */
 	public String getCreatorName() {
-		return ConfigUtil.getString(SimpleCoinFlips.cfData, getCfId() + "creator.name");
+		return ConfigUtil.getString(SimpleCoinFlips.cfData, getCfId() + ".creator.name");
 	}
 
 	/** @return The Side of the CoinFlip the Creator Chose */
