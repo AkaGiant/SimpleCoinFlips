@@ -62,10 +62,16 @@ public class CoinFlipUser {
 	public int getLosses() { return ConfigUtil.getInt(SimpleCoinFlips.playerData, getUuid() + ".total-losses"); }
 
 	/** @return The ratio of win losses */
-	public double getWinLossRatio() { return (getWins() / getTotalGames()); }
+	public double getWinLossRatio() {
+		if (getWins() == 0) return 0;
+		return (getWins() / getTotalGames());
+	}
 
 	/** @return The ratio of win losses * 100*/
-	public double getWinLossRatioAsPercentage() { return (getWins() / getTotalGames()) * 100; }
+	public double getWinLossRatioAsPercentage() {
+		if (getWins() == 0) return 0;
+		return (getWins() / getTotalGames()) * 100;
+	}
 
 
 	public void setHasNotificationsToggled(boolean status) {
